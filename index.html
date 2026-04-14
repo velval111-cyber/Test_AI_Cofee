@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Очко, очки и тапочки — кофейня</title>
+  <style>
+    :root {
+      --bg: #f5f1eb;
+      --bg-2: #efe7dd;
+      --surface: rgba(255,255,255,0.72);
+      --surface-strong: rgba(255,255,255,0.84);
+      --stroke: rgba(72, 49, 33, 0.08);
+      --text: #22170f;
+      --text-soft: #6a5748;
+      --brown: #6c4a35;
+      --brown-deep: #2e1e14;
+      --cream: #f7efe6;
+      --gold: #b9855d;
+      --shadow: 0 20px 60px rgba(46, 30, 20, 0.10);
+      --shadow-soft: 0 8px 30px rgba(46, 30, 20, 0.07);
+      --radius-xl: 36px;
+      --radius-lg: 28px;
+      --radius-md: 22px;
+      --radius-sm: 16px;
+      --container: 1200px;
+      --transition: 320ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(185,133,93,0.18), transparent 26%),
+        radial-gradient(circle at 85% 0%, rgba(255,255,255,0.65), transparent 28%),
+        linear-gradient(180deg, #f7f3ee 0%, #f1e9de 45%, #f6f1ea 100%);
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%, transparent 82%, rgba(255,255,255,0.16));
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 40px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--brown);
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px) saturate(140%);
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      color: var(--brown-deep);
+    }
+
+    h1 {
+      font-size: clamp(3.4rem, 8vw, 7rem);
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: clamp(1.35rem, 2vw, 1.7rem);
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .lead {
+      font-size: clamp(1.08rem, 1.6vw, 1.24rem);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      background: rgba(247, 243, 238, 0.58);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(72,49,33,0.06);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand strong {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--brown-deep);
+    }
+
+    .brand span {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--brown);
+      transition: background var(--transition), transform var(--transition), color var(--transition), box-shadow var(--transition);
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.76);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+      color: var(--brown-deep);
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.78);
+      color: var(--brown-deep);
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn {
+      background: linear-gradient(180deg, #7a543b 0%, #5c3e2d 100%);
+      color: #fff;
+      box-shadow: 0 14px 34px rgba(92,62,45,0.20);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(92,62,45,0.24);
+    }
+
+    .btn-secondary {
+      color: var(--brown-deep);
+      background: rgba(255,255,255,0.66);
+      border: 1px solid rgba(72,49,33,0.08);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.88);
+    }
+
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .hero-copy {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-copy p {
+      margin: 22px auto 0;
+      max-width: 780px;
+      font-size: clamp(1.08rem, 1.8vw, 1.28rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .hero-showcase {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .glass-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.52));
+      border: 1px solid rgba(255,255,255,0.50);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px) saturate(155%);
+      -webkit-backdrop-filter: blur(24px) saturate(155%);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 26px 70px rgba(46,30,20,0.14);
+      border-color: rgba(255,255,255,0.74);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      background:
+        linear-gradient(180deg, rgba(27,17,11,0.04), rgba(27,17,11,0.18)),
+        url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80') center/cover;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 28%);
+      pointer-events: none;
+    }
+
+    .hero-note {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      right: 24px;
+      padding: 22px 24px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.66);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-note strong {
+      display: block;
+      font-size: 1.08rem;
+      color: var(--brown-deep);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .mini-panel {
+      padding: 28px;
+      min-height: 299px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mini-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .mini-kicker {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(185,133,93,0.12);
+      color: var(--brown);
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .big-number {
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      color: var(--brown-deep);
+      line-height: 0.95;
+    }
+
+    .subtle-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .subtle-item {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(72,49,33,0.06);
+      transition: transform var(--transition), background var(--transition);
+    }
+
+    .subtle-item:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,0.72);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.04fr 0.96fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel {
+      padding: 36px;
+    }
+
+    .panel p + p {
+      margin-top: 16px;
+    }
+
+    .quote {
+      margin-top: 26px;
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.54), rgba(255,255,255,0.34));
+      border: 1px solid rgba(72,49,33,0.06);
+    }
+
+    .quote strong {
+      display: block;
+      font-size: 1.06rem;
+      color: var(--brown-deep);
+      margin-bottom: 8px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .drink-card {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .drink-media {
+      height: 290px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .drink-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(34,23,15,0.08) 58%, rgba(34,23,15,0.14) 100%);
+    }
+
+    .drink-content {
+      padding: 26px;
+    }
+
+    .drink-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    .drink-head .price {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .drink-tag {
+      display: inline-flex;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(185,133,93,0.12);
+      color: var(--brown);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .drink-footer {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(72,49,33,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .contact-shell {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .contact-item {
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(72,49,33,0.06);
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-item:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.72);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-item strong {
+      display: block;
+      color: var(--brown-deep);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .location-card {
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(34,23,15,0.06), rgba(34,23,15,0.20)),
+        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80') center/cover;
+    }
+
+    .location-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.24), transparent 26%);
+    }
+
+    .location-overlay {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      padding: 26px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.66);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .footer {
+      padding: 28px 0 42px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      border-top: 1px solid rgba(72,49,33,0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px) scale(0.99);
+      animation: reveal 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.08s; }
+    .delay-2 { animation-delay: 0.16s; }
+    .delay-3 { animation-delay: 0.24s; }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .hero-showcase,
+      .about-grid,
+      .contact-shell,
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual,
+      .location-card {
+        min-height: 520px;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .section {
+        padding: 88px 0;
+      }
+
+      .container {
+        width: min(var(--container), calc(100% - 24px));
+      }
+
+      .header {
+        padding: 12px 0;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 240px;
+        padding: 12px;
+        border-radius: 24px;
+        background: rgba(255,255,255,0.86);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(72,49,33,0.06);
+        box-shadow: var(--shadow);
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .panel,
+      .mini-panel,
+      .drink-content,
+      .location-overlay {
+        padding: 24px;
+      }
+
+      .hero-visual {
+        min-height: 440px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      h1 {
+        font-size: clamp(2.8rem, 14vw, 4rem);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn,
+      .btn-secondary {
+        width: 100%;
+      }
+
+      .hero-note,
+      .location-overlay {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+      }
+
+      .hero-note {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="Очко, очки и тапочки">
+        <strong>Очко, очки и тапочки</strong>
+        <span>Кофейня с характером</span>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">☰</button>
+        <ul class="nav-links">
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+          <li><a href="#contacts" class="btn">Зайти на кофе</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="container">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Кофе. Свет. Тактильный уют.</div>
+          <h1>Место, где городской шум растворяется в правильной чашке кофе.</h1>
+          <p>
+            «Очко, очки и тапочки» — современная кофейня с теплой подачей, спокойной эстетикой и напитками,
+            к которым хочется возвращаться. Никакой суеты. Только вкус, воздух и хорошо выстроенное пространство.
+          </p>
+          <div class="hero-actions">
+            <a href="#menu" class="btn">Посмотреть меню</a>
+            <a href="#about" class="btn-secondary">Узнать историю</a>
+          </div>
+        </div>
+
+        <div class="hero-showcase">
+          <div class="glass-card hero-visual reveal delay-1">
+            <div class="hero-note">
+              <strong>Фирменная подача без лишнего шума</strong>
+              <p>Чистый вкус, выразительная текстура и интерьер, который работает как продолжение напитка.</p>
+            </div>
+          </div>
+
+          <div class="hero-stack">
+            <article class="glass-card mini-panel reveal delay-2">
+              <div>
+                <div class="mini-top">
+                  <span class="mini-kicker">Скорость</span>
+                  <span class="mini-kicker">Ежедневно</span>
+                </div>
+                <div class="big-number">3 мин</div>
+                <h3>От заказа до идеальной подачи</h3>
+                <p>Быстро для тех, кто спешит. Достаточно внимательно для тех, кто замечает детали.</p>
+              </div>
+              <div class="subtle-grid">
+                <div class="subtle-item">Спешелти-зерно</div>
+                <div class="subtle-item">Мягкий свет и тактильные материалы</div>
+              </div>
+            </article>
+
+            <article class="glass-card mini-panel reveal delay-3">
+              <div>
+                <div class="mini-top">
+                  <span class="mini-kicker">Атмосфера</span>
+                  <span class="mini-kicker">Без суеты</span>
+                </div>
+                <div class="big-number">12 ч</div>
+                <h3>Теплого ритма каждый день</h3>
+                <p>Пространство для короткой остановки, разговора, ноутбука, книги и правильного кофе.</p>
+              </div>
+              <div class="subtle-grid">
+                <div class="subtle-item">Кофе с собой и в зале</div>
+                <div class="subtle-item">Уютная точка для встреч</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">О компании</div>
+          <h2>Мы сделали кофейню, где дизайн не спорит со вкусом, а усиливает его.</h2>
+          <p class="lead">
+            Название с иронией, подход — без компромиссов. Хотелось создать место, в котором качественный кофе,
+            понятный сервис и спокойная визуальная среда работают как одна система.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="glass-card panel reveal delay-1">
+            <h3>Наша история</h3>
+            <p>
+              «Очко, очки и тапочки» начиналось как идея про контраст: немного дерзкое имя и предельно собранный продукт.
+              Мы взяли за основу простую мысль — люди возвращаются туда, где им одновременно вкусно, спокойно и визуально комфортно.
+            </p>
+            <p>
+              Поэтому здесь нет случайных решений: от зерна и рецептур до света, фактур и темпа обслуживания. Все выстроено так,
+              чтобы даже короткий визит ощущался как небольшая перезагрузка посреди дня.
+            </p>
+            <div class="quote">
+              <strong>Наша идея</strong>
+              Не просто продавать кофе, а создавать состояние: теплое, собранное и очень человеческое.
+            </div>
+          </article>
+
+          <article class="glass-card panel reveal delay-2">
+            <h3>Что для нас важно</h3>
+            <div class="subtle-grid" style="margin-top: 22px;">
+              <div class="subtle-item"><strong>Чистый вкус.</strong> Напитки с ясным профилем и аккуратным балансом.</div>
+              <div class="subtle-item"><strong>Теплая эстетика.</strong> Кремовые и кофейные оттенки, воздух, мягкие отражения.</div>
+              <div class="subtle-item"><strong>Современный сервис.</strong> Быстро, спокойно, без перегруза и без лишних слов.</div>
+              <div class="subtle-item"><strong>Пространство для жизни.</strong> Для встречи, работы, паузы и утреннего ритуала.</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">Предпросмотр меню</div>
+          <h2>Три напитка, которые лучше всего объясняют, кто мы.</h2>
+          <p class="lead">
+            Основа меню — выразительный кофе, мягкая текстура и вкусы, которые ощущаются современно, но не вычурно.
+          </p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="glass-card drink-card reveal delay-1">
+            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-content">
+              <span class="drink-tag">Фирменный хит</span>
+              <div class="drink-head">
+                <div>
+                  <h3>Раф «Тапочки»</h3>
+                </div>
+                <div class="price">390 ₽</div>
+              </div>
+              <p>Сливочный раф с деликатной ванилью и карамельным акцентом. Мягкий, округлый и очень уютный по ощущениям.</p>
+              <div class="drink-footer">
+                <span>Мягкая текстура</span>
+                <span>Согревающий вкус</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card drink-card reveal delay-2">
+            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-content">
+              <span class="drink-tag">Чистый кофе</span>
+              <div class="drink-head">
+                <div>
+                  <h3>Флэт уайт «Очки»</h3>
+                </div>
+                <div class="price">320 ₽</div>
+              </div>
+              <p>Насыщенный эспрессо и шелковистое молоко. Напиток с характером, в котором вкус зерна остается в центре внимания.</p>
+              <div class="drink-footer">
+                <span>Выразительный профиль</span>
+                <span>Идеален утром</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card drink-card reveal delay-3">
+            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-content">
+              <span class="drink-tag">Авторский вкус</span>
+              <div class="drink-head">
+                <div>
+                  <h3>Латте «Очко»</h3>
+                </div>
+                <div class="price">360 ₽</div>
+              </div>
+              <p>Пряный латте с корицей и теплым сахарным тоном. Выразительный аромат, мягкий финал и долгое послевкусие.</p>
+              <div class="drink-footer">
+                <span>Пряный акцент</span>
+                <span>Фирменная подача</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacts">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">Контакты</div>
+          <h2>Загляните на кофе в удобное время.</h2>
+          <p class="lead">
+            Пространство для быстрых утренних ритуалов, дневной паузы и спокойных вечерних встреч.
+          </p>
+        </div>
+
+        <div class="contact-shell">
+          <article class="glass-card panel reveal delay-1">
+            <h3>Где мы находимся</h3>
+            <div class="contact-list">
+              <div class="contact-item">
+                <strong>Адрес</strong>
+                г. Москва, ул. Примерная, 17
+              </div>
+              <div class="contact-item">
+                <strong>Часы работы</strong>
+                Пн–Пт: 08:00–21:00<br>
+                Сб–Вс: 09:00–22:00
+              </div>
+              <div class="contact-item">
+                <strong>Телефон</strong>
+                +7 (999) 123-45-67
+              </div>
+              <div class="contact-item">
+                <strong>Email</strong>
+                hello@ochko-coffee.ru
+              </div>
+            </div>
+          </article>
+
+          <div class="glass-card location-card reveal delay-2">
+            <div class="location-overlay">
+              <h3>Точка, куда приятно вернуться</h3>
+              <p>
+                Удобная локация, спокойный зал и визуально чистое пространство, в котором хочется задержаться дольше,
+                чем планировал изначально.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 «Очко, очки и тапочки»</div>
+      <div>Современная кофейня с теплым характером</div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.textContent = isOpen ? '✕' : '☰';
+    });
+
+    navAnchors.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.textContent = '☰';
+      });
+    });
+  </script>
+</body>
+</html>
