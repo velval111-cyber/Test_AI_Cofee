@@ -24,6 +24,7 @@
       --radius-md: 22px;
       --radius-sm: 16px;
       --container: 1200px;
+      --header-offset: 104px;
       --transition: 320ms cubic-bezier(.2,.8,.2,1);
     }
 
@@ -35,6 +36,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: var(--header-offset);
     }
 
     body {
@@ -79,6 +81,7 @@
     .section {
       padding: 120px 0;
       position: relative;
+      scroll-margin-top: var(--header-offset);
     }
 
     .section-header {
@@ -305,9 +308,20 @@
     .hero-visual {
       position: relative;
       min-height: 620px;
-      background:
-        linear-gradient(180deg, rgba(27,17,11,0.04), rgba(27,17,11,0.18)),
-        url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80') center/cover;
+      background: linear-gradient(180deg, #937357 0%, #4f3628 100%);
+    }
+
+    .visual-media {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-visual > .visual-media,
+    .location-card > .visual-media {
+      position: absolute;
+      inset: 0;
     }
 
     .hero-visual::before {
@@ -316,6 +330,16 @@
       inset: 0;
       background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 28%);
       pointer-events: none;
+      z-index: 2;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(27,17,11,0.04), rgba(27,17,11,0.18));
+      pointer-events: none;
+      z-index: 1;
     }
 
     .hero-note {
@@ -329,6 +353,7 @@
       backdrop-filter: blur(18px);
       border: 1px solid rgba(255,255,255,0.5);
       box-shadow: var(--shadow-soft);
+      z-index: 3;
     }
 
     .hero-note strong {
@@ -439,9 +464,9 @@
 
     .drink-media {
       height: 290px;
-      background-size: cover;
-      background-position: center;
       position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #c7b29b 0%, #8a684d 100%);
     }
 
     .drink-media::after {
@@ -449,6 +474,7 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(180deg, transparent 0%, rgba(34,23,15,0.08) 58%, rgba(34,23,15,0.14) 100%);
+      pointer-events: none;
     }
 
     .drink-content {
@@ -531,9 +557,7 @@
       min-height: 560px;
       position: relative;
       overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(34,23,15,0.06), rgba(34,23,15,0.20)),
-        url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80') center/cover;
+      background: linear-gradient(180deg, #8f6d54 0%, #3b281d 100%);
     }
 
     .location-card::before {
@@ -541,6 +565,16 @@
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.24), transparent 26%);
+      z-index: 2;
+    }
+
+    .location-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(34,23,15,0.06), rgba(34,23,15,0.20));
+      pointer-events: none;
+      z-index: 1;
     }
 
     .location-overlay {
@@ -554,6 +588,7 @@
       backdrop-filter: blur(18px);
       border: 1px solid rgba(255,255,255,0.5);
       box-shadow: var(--shadow-soft);
+      z-index: 3;
     }
 
     .footer {
@@ -590,6 +625,28 @@
       }
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+    }
+
     @media (max-width: 1100px) {
       .hero-showcase,
       .about-grid,
@@ -605,6 +662,10 @@
     }
 
     @media (max-width: 780px) {
+      :root {
+        --header-offset: 88px;
+      }
+
       .section {
         padding: 88px 0;
       }
@@ -665,6 +726,10 @@
     }
 
     @media (max-width: 560px) {
+      :root {
+        --header-offset: 80px;
+      }
+
       h1 {
         font-size: clamp(2.8rem, 14vw, 4rem);
       }
@@ -705,8 +770,8 @@
       </a>
 
       <nav class="nav" aria-label="Основная навигация">
-        <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">☰</button>
-        <ul class="nav-links">
+        <button class="nav-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-menu" aria-haspopup="true">☰</button>
+        <ul class="nav-links" id="site-menu">
           <li><a href="#about">О нас</a></li>
           <li><a href="#menu">Меню</a></li>
           <li><a href="#contacts">Контакты</a></li>
@@ -734,6 +799,7 @@
 
         <div class="hero-showcase">
           <div class="glass-card hero-visual reveal delay-1">
+            <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80" alt="" decoding="async" fetchpriority="high">
             <div class="hero-note">
               <strong>Фирменная подача без лишнего шума</strong>
               <p>Чистый вкус, выразительная текстура и интерьер, который работает как продолжение напитка.</p>
@@ -830,7 +896,9 @@
 
         <div class="menu-grid">
           <article class="glass-card drink-card reveal delay-1">
-            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-media">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+            </div>
             <div class="drink-content">
               <span class="drink-tag">Фирменный хит</span>
               <div class="drink-head">
@@ -848,7 +916,9 @@
           </article>
 
           <article class="glass-card drink-card reveal delay-2">
-            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-media">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+            </div>
             <div class="drink-content">
               <span class="drink-tag">Чистый кофе</span>
               <div class="drink-head">
@@ -866,7 +936,9 @@
           </article>
 
           <article class="glass-card drink-card reveal delay-3">
-            <div class="drink-media" style="background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80');"></div>
+            <div class="drink-media">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+            </div>
             <div class="drink-content">
               <span class="drink-tag">Авторский вкус</span>
               <div class="drink-head">
@@ -921,6 +993,7 @@
           </article>
 
           <div class="glass-card location-card reveal delay-2">
+            <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy" decoding="async">
             <div class="location-overlay">
               <h3>Точка, куда приятно вернуться</h3>
               <p>
@@ -943,22 +1016,49 @@
 
   <script>
     const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
     const navLinks = document.querySelector('.nav-links');
     const navAnchors = document.querySelectorAll('.nav-links a');
 
-    toggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
-      toggle.textContent = isOpen ? '✕' : '☰';
-    });
+    if (toggle && nav && navLinks) {
+      const setMenuState = (isOpen) => {
+        navLinks.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+        toggle.textContent = isOpen ? '✕' : '☰';
+      };
 
-    navAnchors.forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.textContent = '☰';
+      setMenuState(false);
+
+      toggle.addEventListener('click', () => {
+        setMenuState(!navLinks.classList.contains('open'));
       });
-    });
+
+      navAnchors.forEach(link => {
+        link.addEventListener('click', () => {
+          setMenuState(false);
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (navLinks.classList.contains('open') && !event.target.closest('.nav')) {
+          setMenuState(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+          setMenuState(false);
+          toggle.focus();
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 780 && navLinks.classList.contains('open')) {
+          setMenuState(false);
+        }
+      });
+    }
   </script>
 </body>
 </html>
