@@ -3,29 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Очко, очки и Тапочки — кофейня</title>
+  <title>Очко, очки и тапочки - кофейня</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f1eb;
-      --bg-2: #efe7dd;
-      --surface: rgba(255,255,255,0.72);
-      --surface-strong: rgba(255,255,255,0.84);
-      --stroke: rgba(72, 49, 33, 0.08);
-      --text: #22170f;
-      --text-soft: #6a5748;
-      --brown: #6c4a35;
-      --brown-deep: #2e1e14;
-      --cream: #f7efe6;
-      --gold: #b9855d;
-      --shadow: 0 20px 60px rgba(46, 30, 20, 0.10);
-      --shadow-soft: 0 8px 30px rgba(46, 30, 20, 0.07);
-      --radius-xl: 36px;
-      --radius-lg: 28px;
-      --radius-md: 22px;
-      --radius-sm: 16px;
-      --container: 1200px;
+      --bg: #f6efe7;
+      --bg-soft: #efe3d5;
+      --paper: #fffaf5;
+      --surface: rgba(255, 250, 244, 0.76);
+      --surface-strong: rgba(255, 252, 247, 0.9);
+      --line: rgba(72, 49, 33, 0.1);
+      --line-strong: rgba(72, 49, 33, 0.16);
+      --text: #21160f;
+      --text-soft: #6b5949;
+      --brown: #6a4a35;
+      --brown-deep: #26170f;
+      --accent: #bb6c45;
+      --accent-soft: #f4dac9;
+      --olive: #5b6650;
+      --olive-soft: #dfe5d8;
+      --gold: #bc8b65;
+      --shadow: 0 26px 80px rgba(46, 30, 20, 0.12);
+      --shadow-soft: 0 10px 30px rgba(46, 30, 20, 0.08);
+      --radius-2xl: 40px;
+      --radius-xl: 32px;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --container: 1220px;
       --header-offset: 104px;
-      --transition: 320ms cubic-bezier(.2,.8,.2,1);
+      --transition: 360ms cubic-bezier(.2,.8,.2,1);
     }
 
     * {
@@ -40,25 +49,45 @@
     }
 
     body {
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Manrope", "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 15% 15%, rgba(185,133,93,0.18), transparent 26%),
-        radial-gradient(circle at 85% 0%, rgba(255,255,255,0.65), transparent 28%),
-        linear-gradient(180deg, #f7f3ee 0%, #f1e9de 45%, #f6f1ea 100%);
+        radial-gradient(circle at 15% 12%, rgba(187, 108, 69, 0.18), transparent 26%),
+        radial-gradient(circle at 88% 8%, rgba(255, 255, 255, 0.72), transparent 24%),
+        linear-gradient(180deg, #fbf6f1 0%, #f2e8dc 44%, #f8f3ee 100%);
       line-height: 1.5;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    body::before {
+    body::before,
+    body::after {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,255,255,0.20), transparent 18%, transparent 82%, rgba(255,255,255,0.16));
       z-index: 0;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 24% 24%, rgba(255, 255, 255, 0.22), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.16), transparent 18%, transparent 82%, rgba(255,255,255,0.14));
+    }
+
+    body::after {
+      opacity: 0.38;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 22px 22px;
+      mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.24), transparent 78%);
+    }
+
+    ::selection {
+      background: rgba(187, 108, 69, 0.18);
+      color: var(--brown-deep);
     }
 
     a {
@@ -66,16 +95,31 @@
       text-decoration: none;
     }
 
+    button {
+      font: inherit;
+    }
+
     img {
       display: block;
       max-width: 100%;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(187, 108, 69, 0.36);
+      outline-offset: 3px;
+    }
+
+    main,
+    header,
+    footer {
+      position: relative;
+      z-index: 1;
     }
 
     .container {
       width: min(var(--container), calc(100% - 40px));
       margin: 0 auto;
       position: relative;
-      z-index: 1;
     }
 
     .section {
@@ -85,9 +129,14 @@
     }
 
     .section-header {
-      max-width: 780px;
-      margin: 0 auto 56px;
+      max-width: 760px;
+      margin: 0 auto 54px;
       text-align: center;
+    }
+
+    .section-header.align-left {
+      margin: 0 0 48px;
+      text-align: left;
     }
 
     .eyebrow {
@@ -97,59 +146,85 @@
       gap: 10px;
       padding: 10px 16px;
       border-radius: 999px;
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--brown);
       background: rgba(255,255,255,0.62);
       border: 1px solid rgba(255,255,255,0.5);
       box-shadow: var(--shadow-soft);
       backdrop-filter: blur(18px) saturate(140%);
-      margin-bottom: 20px;
-      letter-spacing: 0.01em;
+      margin-bottom: 22px;
     }
 
-    h1, h2, h3 {
+    .eyebrow-dark {
+      color: #f4dac9;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.12);
+      box-shadow: none;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Fraunces", Georgia, serif;
       font-weight: 700;
       letter-spacing: -0.045em;
-      line-height: 0.98;
+      line-height: 0.94;
       color: var(--brown-deep);
     }
 
     h1 {
-      font-size: clamp(3.4rem, 8vw, 7rem);
+      font-size: clamp(3.7rem, 9vw, 7.25rem);
+      max-width: 11ch;
+      margin: 0 auto;
     }
 
     h2 {
-      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
       margin-bottom: 18px;
     }
 
     h3 {
-      font-size: clamp(1.35rem, 2vw, 1.7rem);
-      margin-bottom: 12px;
+      font-size: clamp(1.45rem, 2vw, 1.9rem);
+      margin-bottom: 14px;
     }
 
     p {
       color: var(--text-soft);
       font-size: 1.05rem;
-      line-height: 1.75;
+      line-height: 1.78;
     }
 
     .lead {
-      font-size: clamp(1.08rem, 1.6vw, 1.24rem);
+      font-size: clamp(1.08rem, 1.7vw, 1.24rem);
       max-width: 760px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    .lead-left {
+      margin-left: 0;
+      margin-right: 0;
+      max-width: none;
     }
 
     .header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      padding: 16px 0;
-      background: rgba(247, 243, 238, 0.58);
+      padding: 18px 0;
+      background: rgba(248, 242, 235, 0.58);
       backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid rgba(72,49,33,0.06);
+      transition: padding var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+
+    .header.is-compact {
+      padding: 12px 0;
+      background: rgba(248, 242, 235, 0.82);
+      box-shadow: 0 14px 34px rgba(46, 30, 20, 0.08);
     }
 
     .header-inner {
@@ -166,16 +241,17 @@
     }
 
     .brand strong {
-      font-size: 1rem;
-      font-weight: 800;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 700;
       letter-spacing: -0.03em;
       color: var(--brown-deep);
     }
 
     .brand span {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       color: var(--text-soft);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .nav {
@@ -195,8 +271,8 @@
     .nav-links a {
       padding: 11px 16px;
       border-radius: 999px;
-      font-size: 0.97rem;
-      font-weight: 600;
+      font-size: 0.96rem;
+      font-weight: 700;
       color: var(--brown);
       transition: background var(--transition), transform var(--transition), color var(--transition), box-shadow var(--transition);
     }
@@ -225,28 +301,30 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       padding: 15px 24px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 800;
       transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
       white-space: nowrap;
+      border: 1px solid transparent;
     }
 
     .btn {
-      background: linear-gradient(180deg, #7a543b 0%, #5c3e2d 100%);
+      background: linear-gradient(180deg, #7a543b 0%, #5a3b2b 100%);
       color: #fff;
-      box-shadow: 0 14px 34px rgba(92,62,45,0.20);
+      box-shadow: 0 16px 36px rgba(92,62,45,0.22);
     }
 
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 18px 40px rgba(92,62,45,0.24);
+      box-shadow: 0 20px 42px rgba(92,62,45,0.26);
     }
 
     .btn-secondary {
       color: var(--brown-deep);
-      background: rgba(255,255,255,0.66);
-      border: 1px solid rgba(72,49,33,0.08);
+      background: rgba(255,255,255,0.64);
+      border-color: rgba(72,49,33,0.08);
       backdrop-filter: blur(16px);
       box-shadow: var(--shadow-soft);
     }
@@ -256,20 +334,28 @@
       background: rgba(255,255,255,0.88);
     }
 
+    .btn-nav {
+      padding-inline: 20px;
+    }
+
+    .nav-links .btn-nav,
+    .nav-links .btn-nav:hover {
+      color: #fff;
+      background: linear-gradient(180deg, #7a543b 0%, #5a3b2b 100%);
+    }
+
     .hero {
-      padding: 72px 0 56px;
+      padding: 86px 0 54px;
     }
 
     .hero-copy {
-      max-width: 980px;
+      max-width: 920px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .hero-copy p {
-      margin: 22px auto 0;
-      max-width: 780px;
-      font-size: clamp(1.08rem, 1.8vw, 1.28rem);
+    .hero-copy .lead {
+      margin-top: 24px;
     }
 
     .hero-actions {
@@ -280,35 +366,62 @@
       margin-top: 34px;
     }
 
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .hero-tag {
+      padding: 11px 15px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.54);
+      border: 1px solid rgba(255,255,255,0.6);
+      color: var(--brown);
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
     .hero-showcase {
-      margin-top: 56px;
+      margin-top: 58px;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 22px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
       align-items: stretch;
     }
 
     .glass-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.52));
-      border: 1px solid rgba(255,255,255,0.50);
+      background: linear-gradient(180deg, rgba(255,255,255,0.76), rgba(255,255,255,0.54));
+      border: 1px solid rgba(255,255,255,0.54);
       box-shadow: var(--shadow);
       backdrop-filter: blur(24px) saturate(155%);
       -webkit-backdrop-filter: blur(24px) saturate(155%);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-2xl);
       overflow: hidden;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
     }
 
     .glass-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 26px 70px rgba(46,30,20,0.14);
+      box-shadow: 0 30px 78px rgba(46,30,20,0.14);
       border-color: rgba(255,255,255,0.74);
     }
 
     .hero-visual {
       position: relative;
-      min-height: 620px;
-      background: linear-gradient(180deg, #937357 0%, #4f3628 100%);
+      min-height: 660px;
+      background: linear-gradient(180deg, #8e6a53 0%, #4b3123 100%);
+      isolation: isolate;
+      --shift-x: 0px;
+      --shift-y: 0px;
+      --shift-x-soft: 0px;
+      --shift-y-soft: 0px;
+      --shift-x-inverse: 0px;
+      --shift-y-inverse: 0px;
     }
 
     .visual-media {
@@ -316,6 +429,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 900ms cubic-bezier(.2,.8,.2,1), filter 900ms cubic-bezier(.2,.8,.2,1);
     }
 
     .hero-visual > .visual-media,
@@ -324,57 +438,114 @@
       inset: 0;
     }
 
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 28%);
-      pointer-events: none;
-      z-index: 2;
+    .hero-visual > .visual-media {
+      transform: scale(1.05) translate3d(var(--shift-x), var(--shift-y), 0);
+      filter: saturate(1.02);
     }
 
+    .hero-visual::before,
     .hero-visual::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(27,17,11,0.04), rgba(27,17,11,0.18));
       pointer-events: none;
+    }
+
+    .hero-visual::before {
+      background: radial-gradient(circle at 24% 24%, rgba(255,255,255,0.3), transparent 28%);
+      z-index: 2;
+    }
+
+    .hero-visual::after {
+      background: linear-gradient(180deg, rgba(25,17,11,0.02), rgba(25,17,11,0.24));
       z-index: 1;
+    }
+
+    .floating-pill {
+      position: absolute;
+      z-index: 3;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(255,252,248,0.8);
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+      max-width: 220px;
+      transition: transform 900ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .floating-pill small {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .floating-pill strong {
+      display: block;
+      color: var(--brown-deep);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .floating-pill--top {
+      top: 24px;
+      right: 24px;
+      transform: translate3d(var(--shift-x-soft), var(--shift-y-soft), 0);
+    }
+
+    .floating-pill--bottom {
+      left: 24px;
+      top: 46%;
+      transform: translate3d(var(--shift-x-inverse), var(--shift-y-inverse), 0);
     }
 
     .hero-note {
       position: absolute;
       left: 24px;
-      bottom: 24px;
       right: 24px;
-      padding: 22px 24px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.66);
+      bottom: 24px;
+      padding: 24px 26px;
+      border-radius: 28px;
+      background: rgba(255,252,248,0.72);
       backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.52);
       box-shadow: var(--shadow-soft);
       z-index: 3;
+      transform: translate3d(var(--shift-x-inverse), var(--shift-y-inverse), 0);
+      transition: transform 900ms cubic-bezier(.2,.8,.2,1);
     }
 
     .hero-note strong {
       display: block;
-      font-size: 1.08rem;
+      font-size: 1.1rem;
       color: var(--brown-deep);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       letter-spacing: -0.02em;
     }
 
     .hero-stack {
       display: grid;
-      gap: 22px;
+      gap: 24px;
     }
 
     .mini-panel {
-      padding: 28px;
-      min-height: 299px;
+      padding: 30px;
+      min-height: 318px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+    }
+
+    .accent-panel {
+      background: linear-gradient(180deg, rgba(255, 246, 240, 0.86), rgba(247, 228, 216, 0.7));
+    }
+
+    .olive-panel {
+      background: linear-gradient(180deg, rgba(243, 247, 238, 0.9), rgba(221, 229, 213, 0.72));
     }
 
     .mini-top {
@@ -389,18 +560,22 @@
       display: inline-flex;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(185,133,93,0.12);
+      background: rgba(255,255,255,0.54);
       color: var(--brown);
-      font-weight: 700;
-      font-size: 0.86rem;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .big-number {
-      font-size: clamp(2.6rem, 5vw, 4rem);
-      font-weight: 800;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.7rem, 5vw, 4.2rem);
+      font-weight: 700;
       letter-spacing: -0.06em;
       color: var(--brown-deep);
       line-height: 0.95;
+      margin-bottom: 12px;
     }
 
     .subtle-grid {
@@ -411,7 +586,7 @@
     .subtle-item {
       padding: 16px 18px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.46);
+      background: rgba(255,255,255,0.48);
       border: 1px solid rgba(72,49,33,0.06);
       transition: transform var(--transition), background var(--transition);
     }
@@ -421,34 +596,255 @@
       background: rgba(255,255,255,0.72);
     }
 
-    .about-grid {
+    .ticker {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border-block: 1px solid rgba(72,49,33,0.08);
+      background: rgba(255,255,255,0.34);
+      backdrop-filter: blur(14px);
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      gap: 18px;
+      padding: 18px 0;
+      animation: ticker 26s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      white-space: nowrap;
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brown);
+    }
+
+    .ticker-item::after {
+      content: "•";
+      color: rgba(187, 108, 69, 0.62);
+    }
+
+    .editorial-shell {
       display: grid;
-      grid-template-columns: 1.04fr 0.96fr;
-      gap: 22px;
-      align-items: stretch;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 24px;
     }
 
-    .panel {
+    .editorial-note {
       padding: 36px;
+      background: linear-gradient(180deg, rgba(255,248,241,0.84), rgba(255,255,255,0.58));
     }
 
-    .panel p + p {
-      margin-top: 16px;
+    .editorial-note p + p {
+      margin-top: 14px;
     }
 
-    .quote {
-      margin-top: 26px;
-      padding: 24px;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.54), rgba(255,255,255,0.34));
-      border: 1px solid rgba(72,49,33,0.06);
+    .editorial-points {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
     }
 
-    .quote strong {
-      display: block;
-      font-size: 1.06rem;
+    .editorial-points li {
+      display: grid;
+      grid-template-columns: 12px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: var(--text-soft);
+    }
+
+    .editorial-points li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 0.55em;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent) 0%, #8f4d2c 100%);
+      box-shadow: 0 0 0 5px rgba(187, 108, 69, 0.1);
+    }
+
+    .reason-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .reason-card {
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.52);
+      border: 1px solid rgba(72,49,33,0.07);
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .reason-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(187, 108, 69, 0.22);
+      background: rgba(255,255,255,0.76);
+    }
+
+    .reason-index {
+      display: inline-flex;
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(187, 108, 69, 0.1);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .dark-section {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(188,139,101,0.18), transparent 24%),
+        linear-gradient(180deg, #35251b 0%, #221610 100%);
+      overflow: hidden;
+    }
+
+    .dark-section h2,
+    .dark-section h3 {
+      color: #fff8f1;
+    }
+
+    .dark-section p {
+      color: rgba(255,244,236,0.76);
+    }
+
+    .ritual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .ritual-card {
+      padding: 30px;
+      border-radius: var(--radius-2xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+      backdrop-filter: blur(18px);
+    }
+
+    .ritual-time {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: #f2ceb8;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .ritual-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .ritual-list li {
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,244,236,0.82);
+    }
+
+    .menu-section {
+      position: relative;
+    }
+
+    .menu-category-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: -8px 0 26px;
+    }
+
+    .menu-pill {
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(72,49,33,0.08);
+      color: var(--brown);
+      font-size: 0.88rem;
+      font-weight: 800;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .menu-pill.is-active {
       color: var(--brown-deep);
-      margin-bottom: 8px;
+      background: linear-gradient(180deg, rgba(187,108,69,0.16), rgba(187,108,69,0.08));
+      border-color: rgba(187,108,69,0.24);
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .featured-media {
+      min-height: 430px;
+      position: relative;
+      background: linear-gradient(180deg, #a88468 0%, #5d3c29 100%);
+      overflow: hidden;
+    }
+
+    .featured-media .visual-media {
+      transform: scale(1.02);
+    }
+
+    .featured-card:hover .featured-media .visual-media {
+      transform: scale(1.07);
+    }
+
+    .featured-copy {
+      padding: 40px;
+      background: linear-gradient(180deg, rgba(255,247,241,0.92), rgba(244,232,222,0.76));
+    }
+
+    .featured-copy h3 {
+      font-size: clamp(2rem, 3vw, 2.9rem);
+      margin-bottom: 16px;
+    }
+
+    .featured-copy p + p {
+      margin-top: 14px;
+    }
+
+    .featured-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 28px;
+    }
+
+    .featured-meta span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.66);
+      border: 1px solid rgba(72,49,33,0.08);
+      color: var(--brown);
+      font-size: 0.88rem;
+      font-weight: 700;
     }
 
     .menu-grid {
@@ -460,6 +856,7 @@
     .drink-card {
       overflow: hidden;
       position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,250,245,0.68));
     }
 
     .drink-media {
@@ -473,8 +870,12 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 0%, rgba(34,23,15,0.08) 58%, rgba(34,23,15,0.14) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(34,23,15,0.08) 58%, rgba(34,23,15,0.16) 100%);
       pointer-events: none;
+    }
+
+    .drink-card:hover .drink-media .visual-media {
+      transform: scale(1.07);
     }
 
     .drink-content {
@@ -501,7 +902,27 @@
       margin-bottom: 14px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(185,133,93,0.12);
+      background: rgba(187,108,69,0.12);
+      color: var(--brown);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .drink-notes {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .drink-notes li {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(72,49,33,0.08);
       color: var(--brown);
       font-size: 0.84rem;
       font-weight: 700;
@@ -519,30 +940,160 @@
       font-size: 0.95rem;
     }
 
-    .contact-shell {
+    .gallery-shell {
       display: grid;
       grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .gallery-quote {
+      margin-top: 28px;
+      padding: 26px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,250,245,0.74), rgba(255,255,255,0.46));
+      border: 1px solid rgba(72,49,33,0.08);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-quote strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--brown-deep);
+      font-size: 1.02rem;
+      letter-spacing: -0.02em;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 220px;
+      gap: 18px;
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #c8b29f 0%, #8a684d 100%);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 20%, rgba(28, 18, 12, 0.34) 100%);
+      pointer-events: none;
+    }
+
+    .gallery-card .visual-media {
+      width: 100%;
+      height: 100%;
+    }
+
+    .gallery-card:hover .visual-media {
+      transform: scale(1.06);
+    }
+
+    .gallery-card.tall {
+      grid-row: span 2;
+    }
+
+    .gallery-card.wide {
+      grid-column: span 2;
+    }
+
+    .gallery-label {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 2;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.78);
+      color: var(--brown-deep);
+      font-size: 0.84rem;
+      font-weight: 800;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .reviews-section {
+      background:
+        radial-gradient(circle at 75% 10%, rgba(255,255,255,0.46), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,246,239,0.34));
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
+    }
+
+    .review-card {
+      padding: 28px;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .review-stars {
+      font-size: 0.96rem;
+      letter-spacing: 0.24em;
+      color: var(--gold);
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .review-card p {
+      flex: 1;
+    }
+
+    .review-meta {
+      display: grid;
+      gap: 4px;
+      margin-top: 20px;
+    }
+
+    .review-meta strong {
+      color: var(--brown-deep);
+    }
+
+    .review-meta span {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .contact-shell {
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+      gap: 24px;
       align-items: stretch;
+    }
+
+    .contact-panel {
+      padding: 36px;
+      background: linear-gradient(180deg, rgba(255,248,241,0.84), rgba(255,255,255,0.58));
     }
 
     .contact-list {
       display: grid;
       gap: 14px;
-      margin-top: 24px;
+      margin-top: 28px;
     }
 
     .contact-item {
       padding: 18px 20px;
       border-radius: 20px;
-      background: rgba(255,255,255,0.48);
+      background: rgba(255,255,255,0.5);
       border: 1px solid rgba(72,49,33,0.06);
       transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
     }
 
     .contact-item:hover {
       transform: translateY(-3px);
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.74);
       box-shadow: var(--shadow-soft);
     }
 
@@ -553,27 +1104,43 @@
       letter-spacing: -0.02em;
     }
 
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
     .location-card {
-      min-height: 560px;
+      min-height: 620px;
       position: relative;
       overflow: hidden;
       background: linear-gradient(180deg, #8f6d54 0%, #3b281d 100%);
     }
 
-    .location-card::before {
+    .location-card > .visual-media {
+      transform: scale(1.03);
+    }
+
+    .location-card:hover > .visual-media {
+      transform: scale(1.08);
+    }
+
+    .location-card::before,
+    .location-card::after {
       content: "";
       position: absolute;
       inset: 0;
+      pointer-events: none;
+    }
+
+    .location-card::before {
       background: radial-gradient(circle at 70% 20%, rgba(255,255,255,0.24), transparent 26%);
       z-index: 2;
     }
 
     .location-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(34,23,15,0.06), rgba(34,23,15,0.20));
-      pointer-events: none;
+      background: linear-gradient(180deg, rgba(34,23,15,0.04), rgba(34,23,15,0.22));
       z-index: 1;
     }
 
@@ -582,17 +1149,88 @@
       left: 24px;
       right: 24px;
       bottom: 24px;
-      padding: 26px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.66);
+      padding: 28px;
+      border-radius: 30px;
+      background: rgba(255,252,248,0.7);
       backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.52);
       box-shadow: var(--shadow-soft);
       z-index: 3;
     }
 
+    .location-flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .location-flags span {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(72,49,33,0.08);
+      color: var(--brown);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .final-cta {
+      padding-top: 36px;
+      padding-bottom: 96px;
+    }
+
+    .final-shell {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 42px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(244, 218, 201, 0.16), transparent 24%),
+        linear-gradient(135deg, rgba(96, 64, 46, 0.98), rgba(39, 26, 18, 0.96));
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .final-shell h2 {
+      color: #fff8f1;
+      max-width: 11ch;
+    }
+
+    .final-shell p {
+      color: rgba(255,244,236,0.76);
+      max-width: 58ch;
+    }
+
+    .final-shell .btn {
+      background: linear-gradient(180deg, #f3d5c4 0%, #d8946d 100%);
+      color: var(--brown-deep);
+      box-shadow: 0 16px 36px rgba(21, 14, 10, 0.2);
+    }
+
+    .final-shell .btn-secondary {
+      color: #fff8f1;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+
+    .final-shell .eyebrow {
+      color: #f4dac9;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: none;
+    }
+
+    .final-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
     .footer {
-      padding: 28px 0 42px;
+      padding: 0 0 42px;
       position: relative;
       z-index: 1;
     }
@@ -608,20 +1246,35 @@
       font-size: 0.95rem;
     }
 
-    .reveal {
+    [data-reveal] {
       opacity: 0;
-      transform: translateY(26px) scale(0.99);
-      animation: reveal 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+      transform: translateY(28px);
+      transition:
+        opacity 0.9s cubic-bezier(.2,.8,.2,1),
+        transform 0.9s cubic-bezier(.2,.8,.2,1);
+      transition-delay: var(--delay, 0s);
     }
 
-    .delay-1 { animation-delay: 0.08s; }
-    .delay-2 { animation-delay: 0.16s; }
-    .delay-3 { animation-delay: 0.24s; }
+    [data-reveal="left"] {
+      transform: translateX(-38px);
+    }
 
-    @keyframes reveal {
+    [data-reveal="right"] {
+      transform: translateX(38px);
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes ticker {
+      from {
+        transform: translateX(0);
+      }
+
       to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateX(-50%);
       }
     }
 
@@ -640,24 +1293,33 @@
         scroll-behavior: auto !important;
       }
 
-      .reveal {
+      [data-reveal] {
         opacity: 1;
         transform: none;
-        animation: none;
       }
     }
 
     @media (max-width: 1100px) {
       .hero-showcase,
-      .about-grid,
-      .contact-shell,
-      .menu-grid {
+      .editorial-shell,
+      .featured-card,
+      .gallery-shell,
+      .contact-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .reason-grid,
+      .reviews-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ritual-grid {
         grid-template-columns: 1fr;
       }
 
       .hero-visual,
       .location-card {
-        min-height: 520px;
+        min-height: 540px;
       }
     }
 
@@ -689,10 +1351,10 @@
         position: absolute;
         top: calc(100% + 10px);
         right: 0;
-        min-width: 240px;
+        min-width: 260px;
         padding: 12px;
         border-radius: 24px;
-        background: rgba(255,255,255,0.86);
+        background: rgba(255,255,255,0.88);
         backdrop-filter: blur(18px);
         border: 1px solid rgba(72,49,33,0.06);
         box-shadow: var(--shadow);
@@ -710,18 +1372,51 @@
       }
 
       .hero {
-        padding-top: 48px;
+        padding-top: 54px;
       }
 
-      .panel,
+      .featured-copy,
+      .contact-panel,
+      .editorial-note,
       .mini-panel,
       .drink-content,
-      .location-overlay {
+      .location-overlay,
+      .final-shell {
         padding: 24px;
       }
 
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 240px;
+      }
+
+      .gallery-card.tall,
+      .gallery-card.wide {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .reviews-grid,
+      .reason-grid,
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
       .hero-visual {
-        min-height: 440px;
+        min-height: 480px;
+      }
+
+      .floating-pill--bottom {
+        top: auto;
+        bottom: 138px;
+      }
+
+      .final-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .final-actions {
+        justify-content: flex-start;
       }
     }
 
@@ -731,14 +1426,16 @@
       }
 
       h1 {
-        font-size: clamp(2.8rem, 14vw, 4rem);
+        font-size: clamp(3rem, 14vw, 4.35rem);
       }
 
       h2 {
-        font-size: clamp(2rem, 10vw, 2.8rem);
+        font-size: clamp(2.2rem, 10vw, 3rem);
       }
 
-      .hero-actions {
+      .hero-actions,
+      .contact-actions,
+      .final-actions {
         flex-direction: column;
         align-items: stretch;
       }
@@ -755,8 +1452,17 @@
         bottom: 14px;
       }
 
-      .hero-note {
-        padding: 18px;
+      .floating-pill {
+        display: none;
+      }
+
+      .hero-tag,
+      .menu-pill,
+      .location-flags span,
+      .drink-notes li,
+      .featured-meta span {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -766,16 +1472,16 @@
     <div class="container header-inner">
       <a href="#home" class="brand" aria-label="Очко, очки и тапочки">
         <strong>Очко, очки и тапочки</strong>
-        <span>Кофейня с характером</span>
+        <span>Кофейня с тихим характером</span>
       </a>
 
       <nav class="nav" aria-label="Основная навигация">
         <button class="nav-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-menu" aria-haspopup="true">☰</button>
         <ul class="nav-links" id="site-menu">
           <li><a href="#about">О нас</a></li>
+          <li><a href="#rituals">Ритм дня</a></li>
           <li><a href="#menu">Меню</a></li>
-          <li><a href="#contacts">Контакты</a></li>
-          <li><a href="#contacts" class="btn">Зайти на кофе</a></li>
+          <li><a href="#contacts" class="btn btn-nav">Зайти на кофе</a></li>
         </ul>
       </nav>
     </div>
@@ -784,58 +1490,71 @@
   <main>
     <section class="hero section" id="home">
       <div class="container">
-        <div class="hero-copy reveal">
-          <div class="eyebrow">Кофе. Свет. Тактильный уют.</div>
-          <h1>Место, где городской шум растворяется в правильной чашке кофе.</h1>
-          <p>
-            «Очко, очки и тапочки» — современная кофейня с теплой подачей, спокойной эстетикой и напитками,
-            к которым хочется возвращаться. Никакой суеты. Только вкус, воздух и хорошо выстроенное пространство.
+        <div class="hero-copy" data-reveal style="--delay: 0.04s;">
+          <div class="eyebrow">Спешелти кофе • тихий свет • мягкий ритм</div>
+          <h1>Кофейня, в которой хочется задержаться дольше, чем планировал.</h1>
+          <p class="lead">
+            «Очко, очки и тапочки» - пространство для спокойных встреч, коротких пауз и длинных разговоров.
+            Мы собираем вкус, свет и тактильность так, чтобы кофе работал не отдельно, а вместе с местом вокруг.
           </p>
           <div class="hero-actions">
             <a href="#menu" class="btn">Посмотреть меню</a>
-            <a href="#about" class="btn-secondary">Узнать историю</a>
+            <a href="#rituals" class="btn-secondary">Поймать ритм дня</a>
+          </div>
+          <div class="hero-tags">
+            <span class="hero-tag">Зерно свежей обжарки</span>
+            <span class="hero-tag">Светлый зал без шума</span>
+            <span class="hero-tag">Кофе с собой и для длинных посиделок</span>
           </div>
         </div>
 
         <div class="hero-showcase">
-          <div class="glass-card hero-visual reveal delay-1">
-            <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80" alt="" decoding="async" fetchpriority="high">
+          <div class="glass-card hero-visual" data-reveal="left" style="--delay: 0.12s;">
+            <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80" alt="Бариста готовит кофе за стойкой" decoding="async" fetchpriority="high">
+            <div class="floating-pill floating-pill--top">
+              <small>Настроение</small>
+              <strong>Тихое утро с мягким светом и хорошей чашкой</strong>
+            </div>
+            <div class="floating-pill floating-pill--bottom">
+              <small>Подача</small>
+              <strong>Чистые вкусы, теплые материалы и никакой суеты</strong>
+            </div>
             <div class="hero-note">
-              <strong>Фирменная подача без лишнего шума</strong>
-              <p>Чистый вкус, выразительная текстура и интерьер, который работает как продолжение напитка.</p>
+              <strong>Место, которое не спорит с вами за внимание</strong>
+              <p>Здесь удобно зайти на пять минут, остаться на час и вернуться снова, потому что вкус и атмосфера собраны в один ритм.</p>
             </div>
           </div>
 
           <div class="hero-stack">
-            <article class="glass-card mini-panel reveal delay-2">
+            <article class="glass-card mini-panel accent-panel" data-reveal="right" style="--delay: 0.18s;">
               <div>
                 <div class="mini-top">
                   <span class="mini-kicker">Скорость</span>
                   <span class="mini-kicker">Ежедневно</span>
                 </div>
                 <div class="big-number">3 мин</div>
-                <h3>От заказа до идеальной подачи</h3>
-                <p>Быстро для тех, кто спешит. Достаточно внимательно для тех, кто замечает детали.</p>
+                <h3>От заказа до подачи без нервного темпа</h3>
+                <p>Мы работаем быстро, но не суетливо. За это отвечает точная карта напитков, понятный сервис и выстроенный ритм бара.</p>
               </div>
               <div class="subtle-grid">
-                <div class="subtle-item">Спешелти-зерно</div>
-                <div class="subtle-item">Мягкий свет и тактильные материалы</div>
+                <div class="subtle-item">Спешелти зерно и стабильная экстракция</div>
+                <div class="subtle-item">Команда, которая разговаривает коротко и по делу</div>
               </div>
             </article>
 
-            <article class="glass-card mini-panel reveal delay-3">
+            <article class="glass-card mini-panel olive-panel" data-reveal="right" style="--delay: 0.24s;">
               <div>
                 <div class="mini-top">
                   <span class="mini-kicker">Атмосфера</span>
-                  <span class="mini-kicker">Без суеты</span>
+                  <span class="mini-kicker">Каждый день</span>
                 </div>
                 <div class="big-number">12 ч</div>
-                <h3>Теплого ритма каждый день</h3>
-                <p>Пространство для короткой остановки, разговора, ноутбука, книги и правильного кофе.</p>
+                <h3>Ритма, в котором удобно работать, встречаться и просто выдохнуть</h3>
+                <p>Место для утренних ритуалов, дневной паузы и вечера без лишнего шума. Здесь одинаково уместны ноутбук, книга и разговор.</p>
               </div>
               <div class="subtle-grid">
-                <div class="subtle-item">Кофе с собой и в зале</div>
-                <div class="subtle-item">Уютная точка для встреч</div>
+                <div class="subtle-item">Мягкий свет и спокойная посадка</div>
+                <div class="subtle-item">Точка, куда возвращаются за состоянием, а не только за кофе</div>
               </div>
             </article>
           </div>
@@ -843,61 +1562,158 @@
       </div>
     </section>
 
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">спешелти зерно</span>
+        <span class="ticker-item">тихие завтраки</span>
+        <span class="ticker-item">молочные текстуры</span>
+        <span class="ticker-item">городская пауза</span>
+        <span class="ticker-item">кофе для встреч</span>
+        <span class="ticker-item">светлый интерьер</span>
+        <span class="ticker-item">спешелти зерно</span>
+        <span class="ticker-item">тихие завтраки</span>
+        <span class="ticker-item">молочные текстуры</span>
+        <span class="ticker-item">городская пауза</span>
+        <span class="ticker-item">кофе для встреч</span>
+        <span class="ticker-item">светлый интерьер</span>
+      </div>
+    </div>
+
     <section class="section" id="about">
       <div class="container">
-        <div class="section-header reveal">
-          <div class="eyebrow">О компании</div>
-          <h2>Мы сделали кофейню, где дизайн не спорит со вкусом, а усиливает его.</h2>
-          <p class="lead">
-            Название с иронией, подход — без компромиссов. Хотелось создать место, в котором качественный кофе,
-            понятный сервис и спокойная визуальная среда работают как одна система.
-          </p>
+        <div class="editorial-shell">
+          <div class="section-header align-left" data-reveal="left">
+            <div class="eyebrow">О кофейне</div>
+            <h2>Мы сделали место, где визуальная среда усиливает вкус, а не отвлекает от него.</h2>
+            <p class="lead lead-left">
+              Название у нас с характером, но подход очень собранный. Хотелось придумать кофейню, в которой хороший напиток,
+              спокойный сервис и мягкая эстетика работают как одна система. Не отдельные детали, а единое состояние.
+            </p>
+          </div>
+
+          <aside class="editorial-note glass-card" data-reveal="right" style="--delay: 0.08s;">
+            <h3>Почему сюда хочется возвращаться</h3>
+            <p>Мы не строим вокруг кофе шумный спектакль. Вместо этого собираем ровный опыт, который ощущается честно и легко.</p>
+            <p>Каждое решение работает на одно ощущение: вкусно, спокойно, собрано.</p>
+            <ul class="editorial-points">
+              <li>От зерна и рецептуры до света и посадки все настроено на чистое восприятие.</li>
+              <li>Бариста помогают, но не давят сложными словами и не создают лишнего ритуала.</li>
+              <li>Интерьер не кричит о себе, а дает кофе и людям быть в фокусе.</li>
+            </ul>
+          </aside>
         </div>
 
-        <div class="about-grid">
-          <article class="glass-card panel reveal delay-1">
-            <h3>Наша история</h3>
-            <p>
-              «Очко, очки и тапочки» начиналось как идея про контраст: немного дерзкое имя и предельно собранный продукт.
-              Мы взяли за основу простую мысль — люди возвращаются туда, где им одновременно вкусно, спокойно и визуально комфортно.
-            </p>
-            <p>
-              Поэтому здесь нет случайных решений: от зерна и рецептур до света, фактур и темпа обслуживания. Все выстроено так,
-              чтобы даже короткий визит ощущался как небольшая перезагрузка посреди дня.
-            </p>
-            <div class="quote">
-              <strong>Наша идея</strong>
-              Не просто продавать кофе, а создавать состояние: теплое, собранное и очень человеческое.
-            </div>
+        <div class="reason-grid">
+          <article class="reason-card" data-reveal style="--delay: 0.04s;">
+            <span class="reason-index">01</span>
+            <h3>Чистый вкус</h3>
+            <p>Напитки с ясным профилем, мягким балансом и узнаваемым телом. Без перегруза и без лишних украшений.</p>
           </article>
-
-          <article class="glass-card panel reveal delay-2">
-            <h3>Что для нас важно</h3>
-            <div class="subtle-grid" style="margin-top: 22px;">
-              <div class="subtle-item"><strong>Чистый вкус.</strong> Напитки с ясным профилем и аккуратным балансом.</div>
-              <div class="subtle-item"><strong>Теплая эстетика.</strong> Кремовые и кофейные оттенки, воздух, мягкие отражения.</div>
-              <div class="subtle-item"><strong>Современный сервис.</strong> Быстро, спокойно, без перегруза и без лишних слов.</div>
-              <div class="subtle-item"><strong>Пространство для жизни.</strong> Для встречи, работы, паузы и утреннего ритуала.</div>
-            </div>
+          <article class="reason-card" data-reveal style="--delay: 0.12s;">
+            <span class="reason-index">02</span>
+            <h3>Теплая эстетика</h3>
+            <p>Кремовые поверхности, спокойные оттенки, много воздуха и света. Визуально мягко, но не сладко.</p>
+          </article>
+          <article class="reason-card" data-reveal style="--delay: 0.2s;">
+            <span class="reason-index">03</span>
+            <h3>Сервис без нажима</h3>
+            <p>Можно быстро взять кофе навынос, можно обсудить зерно, а можно просто спокойно заказать любимое и остаться.</p>
+          </article>
+          <article class="reason-card" data-reveal style="--delay: 0.28s;">
+            <span class="reason-index">04</span>
+            <h3>Пространство для жизни</h3>
+            <p>Завтраки с ноутбуком, короткие встречи, пауза посреди дня и вечерние разговоры. У места есть несколько сценариев, и все они работают.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="menu">
+    <section class="section dark-section" id="rituals">
       <div class="container">
-        <div class="section-header reveal">
-          <div class="eyebrow">Предпросмотр меню</div>
-          <h2>Три напитка, которые лучше всего объясняют, кто мы.</h2>
+        <div class="section-header" data-reveal>
+          <div class="eyebrow eyebrow-dark">Ритм дня</div>
+          <h2>У кофейни есть три состояния. И каждое живет по-своему.</h2>
           <p class="lead">
-            Основа меню — выразительный кофе, мягкая текстура и вкусы, которые ощущаются современно, но не вычурно.
+            Мы не одинаковы утром, днем и вечером. Поэтому пространство, свет и выбор напитков подстраиваются не под шаблон, а под настроение времени.
           </p>
         </div>
 
+        <div class="ritual-grid">
+          <article class="ritual-card" data-reveal style="--delay: 0.06s;">
+            <span class="ritual-time">08:00 - 11:30</span>
+            <h3>Утро</h3>
+            <p>Тихий старт дня, много света, чистые чашки и быстрый ритм для тех, кто спешит, но не хочет жертвовать вкусом.</p>
+            <ul class="ritual-list">
+              <li>Флэт уайт, фильтр, круассан и тишина без фонового хаоса.</li>
+              <li>Удобные столы для ноутбука и коротких рабочих созвонов.</li>
+              <li>Сервис собранный и быстрый, без суеты у стойки.</li>
+            </ul>
+          </article>
+
+          <article class="ritual-card" data-reveal style="--delay: 0.14s;">
+            <span class="ritual-time">12:00 - 17:00</span>
+            <h3>Дневная пауза</h3>
+            <p>Время для коротких встреч, мягких молочных напитков и спокойного переключения между делами.</p>
+            <ul class="ritual-list">
+              <li>Раф, латте и авторские сочетания с теплой текстурой.</li>
+              <li>Посадка для разговоров один на один и встреч без официоза.</li>
+              <li>Интерьер дает выдохнуть, а не добавляет визуального шума.</li>
+            </ul>
+          </article>
+
+          <article class="ritual-card" data-reveal style="--delay: 0.22s;">
+            <span class="ritual-time">17:00 - 22:00</span>
+            <h3>Вечер</h3>
+            <p>Свет становится глубже, темп медленнее, а кофе работает как точка сборки в конце длинного дня.</p>
+            <ul class="ritual-list">
+              <li>Напитки с пряными и карамельными акцентами.</li>
+              <li>Место для спокойных разговоров и длинных посиделок.</li>
+              <li>Теплый интерьер, который не устает к вечеру.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="eyebrow">Меню</div>
+          <h2>Не просто напитки, а характер кофейни в нескольких вкусах.</h2>
+          <p class="lead">
+            Основа меню - выразительный кофе, мягкая текстура и понятные сочетания. То, что современно ощущается, но не выглядит вычурно.
+          </p>
+        </div>
+
+        <div class="menu-category-row" data-reveal style="--delay: 0.08s;">
+          <span class="menu-pill is-active">Кофе</span>
+          <span class="menu-pill">Авторские</span>
+          <span class="menu-pill">Фильтр и сезонное</span>
+          <span class="menu-pill">Десерты к чашке</span>
+        </div>
+
+        <article class="featured-card glass-card" data-reveal style="--delay: 0.12s;">
+          <div class="featured-media">
+            <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80" alt="Авторский кофейный напиток на подносе" loading="lazy" decoding="async">
+          </div>
+          <div class="featured-copy">
+            <span class="drink-tag">Сезонный акцент</span>
+            <h3>Латте с печеным фундуком и апельсиновым сахаром</h3>
+            <p>Теплый латте с ореховой глубиной, цитрусовой искрой и мягким послевкусием. Напиток для той самой дневной паузы, когда нужно чуть замедлиться.</p>
+            <p>Он не спорит с зерном, а аккуратно расширяет его, оставляя вкус в центре внимания.</p>
+            <div class="featured-meta">
+              <span>сливочный</span>
+              <span>ореховый</span>
+              <span>с теплой цитрусовой нотой</span>
+            </div>
+            <a href="#contacts" class="btn-secondary">Спросить у бариста</a>
+          </div>
+        </article>
+
         <div class="menu-grid">
-          <article class="glass-card drink-card reveal delay-1">
+          <article class="glass-card drink-card" data-reveal style="--delay: 0.08s;">
             <div class="drink-media">
-              <img class="visual-media" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1400&q=80" alt="Кремовый кофейный напиток в бокале" loading="lazy" decoding="async">
             </div>
             <div class="drink-content">
               <span class="drink-tag">Фирменный хит</span>
@@ -907,17 +1723,22 @@
                 </div>
                 <div class="price">390 ₽</div>
               </div>
-              <p>Сливочный раф с деликатной ванилью и карамельным акцентом. Мягкий, округлый и очень уютный по ощущениям.</p>
+              <p>Сливочный раф с деликатной ванилью и карамельным тоном. Напиток мягкий, округлый и очень уютный по ощущению.</p>
+              <ul class="drink-notes">
+                <li>ваниль</li>
+                <li>карамель</li>
+                <li>бархатная текстура</li>
+              </ul>
               <div class="drink-footer">
-                <span>Мягкая текстура</span>
                 <span>Согревающий вкус</span>
+                <span>Для длинной паузы</span>
               </div>
             </div>
           </article>
 
-          <article class="glass-card drink-card reveal delay-2">
+          <article class="glass-card drink-card" data-reveal style="--delay: 0.16s;">
             <div class="drink-media">
-              <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1400&q=80" alt="Чашка флэт уайта на деревянном столе" loading="lazy" decoding="async">
             </div>
             <div class="drink-content">
               <span class="drink-tag">Чистый кофе</span>
@@ -928,16 +1749,21 @@
                 <div class="price">320 ₽</div>
               </div>
               <p>Насыщенный эспрессо и шелковистое молоко. Напиток с характером, в котором вкус зерна остается в центре внимания.</p>
+              <ul class="drink-notes">
+                <li>яркий профиль</li>
+                <li>молочная гладкость</li>
+                <li>идеален утром</li>
+              </ul>
               <div class="drink-footer">
-                <span>Выразительный профиль</span>
-                <span>Идеален утром</span>
+                <span>Четкий баланс</span>
+                <span>Для быстрого старта</span>
               </div>
             </div>
           </article>
 
-          <article class="glass-card drink-card reveal delay-3">
+          <article class="glass-card drink-card" data-reveal style="--delay: 0.24s;">
             <div class="drink-media">
-              <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80" alt="" loading="lazy" decoding="async">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1400&q=80" alt="Чашка латте с теплым светом на заднем плане" loading="lazy" decoding="async">
             </div>
             <div class="drink-content">
               <span class="drink-tag">Авторский вкус</span>
@@ -947,11 +1773,93 @@
                 </div>
                 <div class="price">360 ₽</div>
               </div>
-              <p>Пряный латте с корицей и теплым сахарным тоном. Выразительный аромат, мягкий финал и долгое послевкусие.</p>
+              <p>Пряный латте с корицей и теплым сахарным тоном. Выразительный аромат, мягкий финал и долгое приятное послевкусие.</p>
+              <ul class="drink-notes">
+                <li>корица</li>
+                <li>тростниковый сахар</li>
+                <li>длинный финал</li>
+              </ul>
               <div class="drink-footer">
                 <span>Пряный акцент</span>
-                <span>Фирменная подача</span>
+                <span>Для вечернего настроения</span>
               </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="mood">
+      <div class="container">
+        <div class="gallery-shell">
+          <div data-reveal="left">
+            <div class="eyebrow">Атмосфера</div>
+            <h2>Сайт должен не только рассказывать о тактильности, но и показывать ее.</h2>
+            <p class="lead lead-left">
+              Поэтому визуальный слой строится не только на напитках. Важны руки, свет, посадка, воздух между предметами и ощущение места, которое не торопит.
+            </p>
+            <div class="gallery-quote">
+              <strong>Коротко о настроении</strong>
+              Здесь нет случайных декоративных решений. Даже когда вы просто скроллите страницу, она должна звучать как спокойный городской ритуал.
+            </div>
+          </div>
+
+          <div class="gallery-grid">
+            <article class="gallery-card tall" data-reveal style="--delay: 0.06s;">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80" alt="Кофе на деревянном столе" loading="lazy" decoding="async">
+              <span class="gallery-label">Уютная пауза</span>
+            </article>
+            <article class="gallery-card" data-reveal style="--delay: 0.12s;">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80" alt="Светлый интерьер кофейни" loading="lazy" decoding="async">
+              <span class="gallery-label">Свет и воздух</span>
+            </article>
+            <article class="gallery-card" data-reveal style="--delay: 0.18s;">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80" alt="Бариста за кофейной стойкой" loading="lazy" decoding="async">
+              <span class="gallery-label">Живой ритм</span>
+            </article>
+            <article class="gallery-card wide" data-reveal style="--delay: 0.24s;">
+              <img class="visual-media" src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1600&q=80" alt="Гости кофейни сидят у окна" loading="lazy" decoding="async">
+              <span class="gallery-label">Место для встреч и длинных разговоров</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reviews-section" id="reviews">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="eyebrow">Почему возвращаются</div>
+          <h2>Люди приходят не только за напитком, но и за ощущением собранного места.</h2>
+          <p class="lead">
+            Ниже - тот тип впечатлений, на который должен работать и интерьер, и структура сайта, и тон всей коммуникации.
+          </p>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="glass-card review-card" data-reveal style="--delay: 0.08s;">
+            <div class="review-stars">★★★★★</div>
+            <p>«Утром здесь очень легко начать день. Быстро, вкусно и без ощущения, что вокруг тебя все время что-то происходит слишком громко.»</p>
+            <div class="review-meta">
+              <strong>Анна</strong>
+              <span>утренний ритуал перед работой</span>
+            </div>
+          </article>
+
+          <article class="glass-card review-card" data-reveal style="--delay: 0.16s;">
+            <div class="review-stars">★★★★★</div>
+            <p>«Нравится, что это не стерильный минимализм и не шумная модная кофейня. Тут как будто все просто собрано в правильной пропорции.»</p>
+            <div class="review-meta">
+              <strong>Илья</strong>
+              <span>дневные встречи и короткие паузы</span>
+            </div>
+          </article>
+
+          <article class="glass-card review-card" data-reveal style="--delay: 0.24s;">
+            <div class="review-stars">★★★★★</div>
+            <p>«Вечером особенно хорошо. Свет становится теплее, кофе мягче, и место ощущается как спокойная точка внутри города.»</p>
+            <div class="review-meta">
+              <strong>Мария</strong>
+              <span>вечерние разговоры после длинного дня</span>
             </div>
           </article>
         </div>
@@ -960,17 +1868,14 @@
 
     <section class="section" id="contacts">
       <div class="container">
-        <div class="section-header reveal">
-          <div class="eyebrow">Контакты</div>
-          <h2>Загляните на кофе в удобное время.</h2>
-          <p class="lead">
-            Пространство для быстрых утренних ритуалов, дневной паузы и спокойных вечерних встреч.
-          </p>
-        </div>
-
         <div class="contact-shell">
-          <article class="glass-card panel reveal delay-1">
-            <h3>Где мы находимся</h3>
+          <article class="glass-card contact-panel" data-reveal="left">
+            <div class="eyebrow">Контакты</div>
+            <h2>Загляните на кофе в удобное время.</h2>
+            <p class="lead lead-left">
+              Пространство для быстрых утренних ритуалов, дневной паузы и спокойных вечерних встреч.
+              Если нужен кофе без лишнего шума, мы рядом.
+            </p>
             <div class="contact-list">
               <div class="contact-item">
                 <strong>Адрес</strong>
@@ -978,8 +1883,8 @@
               </div>
               <div class="contact-item">
                 <strong>Часы работы</strong>
-                Пн–Пт: 08:00–21:00<br>
-                Сб–Вс: 09:00–22:00
+                Пн-Пт: 08:00-21:00<br>
+                Сб-Вс: 09:00-22:00
               </div>
               <div class="contact-item">
                 <strong>Телефон</strong>
@@ -990,17 +1895,45 @@
                 hello@ochko-coffee.ru
               </div>
             </div>
+            <div class="contact-actions">
+              <a class="btn" href="tel:+79991234567">Позвонить</a>
+              <a class="btn-secondary" href="mailto:hello@ochko-coffee.ru">Написать</a>
+            </div>
           </article>
 
-          <div class="glass-card location-card reveal delay-2">
-            <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80" alt="" loading="lazy" decoding="async">
+          <div class="glass-card location-card" data-reveal="right">
+            <img class="visual-media" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80" alt="Светлый зал кофейни с посадкой у окна" loading="lazy" decoding="async">
             <div class="location-overlay">
-              <h3>Точка, куда приятно вернуться</h3>
+              <h3>Точка, куда возвращаются за ритмом</h3>
               <p>
-                Удобная локация, спокойный зал и визуально чистое пространство, в котором хочется задержаться дольше,
-                чем планировал изначально.
+                Удобная локация, спокойный зал и визуально чистое пространство, в котором легко задержаться дольше,
+                чем собирался изначально. Утром быстро, днем мягко, вечером особенно уютно.
               </p>
+              <div class="location-flags">
+                <span>Тихое утро</span>
+                <span>Встречи без суеты</span>
+                <span>Теплый вечерний свет</span>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta" id="visit">
+      <div class="container">
+        <div class="glass-card final-shell" data-reveal>
+          <div>
+            <div class="eyebrow">Финальный акцент</div>
+            <h2>Если нужен кофе без лишнего шума, мы уже держим для вас место.</h2>
+            <p class="lead lead-left">
+              Страница теперь не просто рассказывает о кофейне, а дает почувствовать ее ритм:
+              спокойный, теплый, собранный и чуть более живой за счет новых блоков, контраста секций и мягких анимаций.
+            </p>
+          </div>
+          <div class="final-actions">
+            <a href="tel:+79991234567" class="btn">Позвонить</a>
+            <a href="#menu" class="btn-secondary">Вернуться к меню</a>
           </div>
         </div>
       </div>
@@ -1010,15 +1943,30 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>© 2026 «Очко, очки и тапочки»</div>
-      <div>Современная кофейня с теплым характером</div>
+      <div>Москва, ул. Примерная, 17</div>
     </div>
   </footer>
 
   <script>
+    const header = document.querySelector('.header');
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.querySelector('.nav');
     const navLinks = document.querySelector('.nav-links');
     const navAnchors = document.querySelectorAll('.nav-links a');
+    const heroVisual = document.querySelector('.hero-visual');
+    const revealItems = document.querySelectorAll('[data-reveal]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const setHeaderState = () => {
+      if (!header) {
+        return;
+      }
+
+      header.classList.toggle('is-compact', window.scrollY > 18);
+    };
+
+    setHeaderState();
+    window.addEventListener('scroll', setHeaderState, { passive: true });
 
     if (toggle && nav && navLinks) {
       const setMenuState = (isOpen) => {
@@ -1034,7 +1982,7 @@
         setMenuState(!navLinks.classList.contains('open'));
       });
 
-      navAnchors.forEach(link => {
+      navAnchors.forEach((link) => {
         link.addEventListener('click', () => {
           setMenuState(false);
         });
@@ -1058,6 +2006,66 @@
           setMenuState(false);
         }
       });
+    }
+
+    const revealAll = () => {
+      revealItems.forEach((item) => {
+        item.classList.add('is-visible');
+      });
+    };
+
+    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
+      revealAll();
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.16,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      revealItems.forEach((item) => {
+        observer.observe(item);
+      });
+    }
+
+    if (heroVisual && !prefersReducedMotion.matches) {
+      const resetHeroShift = () => {
+        heroVisual.style.setProperty('--shift-x', '0px');
+        heroVisual.style.setProperty('--shift-y', '0px');
+        heroVisual.style.setProperty('--shift-x-soft', '0px');
+        heroVisual.style.setProperty('--shift-y-soft', '0px');
+        heroVisual.style.setProperty('--shift-x-inverse', '0px');
+        heroVisual.style.setProperty('--shift-y-inverse', '0px');
+      };
+
+      resetHeroShift();
+
+      heroVisual.addEventListener('pointermove', (event) => {
+        const rect = heroVisual.getBoundingClientRect();
+        const offsetX = (event.clientX - rect.left) / rect.width - 0.5;
+        const offsetY = (event.clientY - rect.top) / rect.height - 0.5;
+        const shiftX = `${(offsetX * 16).toFixed(2)}px`;
+        const shiftY = `${(offsetY * 16).toFixed(2)}px`;
+        const shiftXSoft = `${(offsetX * 9).toFixed(2)}px`;
+        const shiftYSoft = `${(offsetY * 9).toFixed(2)}px`;
+        const shiftXInverse = `${(offsetX * -7).toFixed(2)}px`;
+        const shiftYInverse = `${(offsetY * -7).toFixed(2)}px`;
+
+        heroVisual.style.setProperty('--shift-x', shiftX);
+        heroVisual.style.setProperty('--shift-y', shiftY);
+        heroVisual.style.setProperty('--shift-x-soft', shiftXSoft);
+        heroVisual.style.setProperty('--shift-y-soft', shiftYSoft);
+        heroVisual.style.setProperty('--shift-x-inverse', shiftXInverse);
+        heroVisual.style.setProperty('--shift-y-inverse', shiftYInverse);
+      });
+
+      heroVisual.addEventListener('pointerleave', resetHeroShift);
     }
   </script>
 </body>
